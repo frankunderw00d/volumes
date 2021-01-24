@@ -1,0 +1,8 @@
+./mysql/data/
+./mysql/log/
+
+./redis/data/
+./redis/log/
+
+./mongo/data/
+./mongo/log/
