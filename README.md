@@ -104,3 +104,41 @@ mongo:4.4.3 -f /mongo/conf/mongod.conf
 10.`exit` 退出 mongo-service 容器
 
 11.`docker container restart mongo-service` 重启 mongo-service 容器
+
+## 4.Registry 容器准备及启动
+### 准备:
+1.`docker image pull registry:2.4.1` 拉取最新的 registry 2.4.1版本镜像
+
+2.`mkdir -p registry/data/` 创建数据持久文件夹
+
+### 启动:
+
+1.启动容器
+
+```
+docker container run -d --name registry -p 5000:5000 \
+--mount type=bind,src=$PWD/registry/data,dst=/var/lib/registry \
+--mount type=bind,src=$PWD/registry/conf/config.yaml,dst=/etc/docker/registry/config.yml \
+registry:2.4.1
+```
+
+2.`docker image push 127.0.0.1:5000/globalserver:v1.0.0` 推送已有镜像到私有仓库
+
+3.`curl http://localhost:5000/v2/_catalog` 查看私有仓库
+
+## 5.Registry-UI 容器准备及启动
+### 准备:
+1.`docker image pull joxit/docker-registry-ui:main-static` 拉取最新的 joxit/docker-registry-ui main-static版本镜像
+
+### 启动:
+
+1.启动容器
+
+```
+docker container run -d --name registry-ui -p 80:80 \
+-e URL=http://157.175.44.167:5000 \
+-e DELETE=true \
+joxit/docker-registry-ui:main-static
+```
+
+2.`http://localhost/` 浏览器打开此地址开启私有仓库查看管理
