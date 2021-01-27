@@ -47,5 +47,24 @@ create table if not exists `dynamic_account`(
     password varchar(20) not null comment '账号密码',
     type int not null default 0 comment '账户类别 0 - 游客, 1 - 绑定用户',
     platform int not null comment '账号所属平台',
+    create_at timestamp not null default current_timestamp,
+    update_at timestamp not null default current_timestamp on update current_timestamp,
     primary key (id)
 )engine=innodb,default charset = utf8 , comment '账号表';
+
+# 用户信息表代表面向服务器的一个用户，通过 `account_token` 字段和 `dynamic_account` 唯一绑定
+create table if not exists `dynamic_userInfo`(
+    id int auto_increment comment 'id',
+    account_token varchar(20) not null unique comment '账号唯一标识',
+    name varchar(50) not null comment '用户名',
+    age int default 0 comment '用户年龄',
+    sex bool default true comment '用户性别',
+    head_image int default 0 comment '用户头像序号',
+    vip int default 0 comment '用户 vip 等级',
+    game_bg_music_volume int default 100 comment '背景音乐音量',
+    game_effect_volume int default 100 comment '音效音量',
+    account_balance bigint default 0 comment '账户余额(单位:分)',
+    create_at timestamp not null default current_timestamp,
+    update_at timestamp not null default current_timestamp on update current_timestamp,
+    primary key (id)
+)engine = innodb , default charset = utf8 , comment '用户账户信息表(记录跟随用户在不同的设备上转移的数据)';
