@@ -47,6 +47,8 @@ create table if not exists `dynamic_account`(
     password varchar(20) not null comment '账号密码',
     type int not null default 0 comment '账户类别 0 - 游客, 1 - 绑定用户',
     platform int not null comment '账号所属平台',
+    last_login timestamp comment '上次登录时间',
+    last_logout timestamp comment '上次登出时间',
     create_at timestamp not null default current_timestamp,
     update_at timestamp not null default current_timestamp on update current_timestamp,
     primary key (id)
