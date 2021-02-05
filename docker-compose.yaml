@@ -1,0 +1,41 @@
+version: "3"
+
+services:
+  mysql-service:
+    image: mysql:8.0.0
+    ports:
+      - "7000:3306"
+    volumes:
+      - ./mysql:/mysql
+    networks:
+      - project
+    environment:
+      MYSQL_ROOT_PASSWORD: "root"
+    restart: always
+    user: root
+    command: --defaults-file=/mysql/conf/my.cnf
+  redis-service:
+    image: redis:6.0.10
+    ports:
+      - "8000:6379"
+    volumes:
+      - ./redis:/redis
+    networks:
+      - project
+    restart: always
+    user: root
+    command: /redis/conf/redis.conf
+  mongo-service:
+    image: mongo:4.4.3
+    ports:
+      - "9000:27017"
+    volumes:
+      - ./mongo:/mongo
+    networks:
+      - project
+    command: -f /mongo/conf/mongod.conf
+    restart: always
+    user: root
+
+networks:
+  project:
