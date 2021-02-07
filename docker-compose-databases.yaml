@@ -2,7 +2,8 @@ version: "3"
 
 services:
   mysql-service:
-    image: mysql:frank-release
+    container_name: mysql-service
+    build: ./mysql
     ports:
       - "7000:3306"
     volumes:
@@ -12,7 +13,8 @@ services:
     restart: always
     command: --defaults-file=/mysql/conf/my.cnf
   redis-service:
-    image: redis:frank-release
+    container_name: redis-service
+    build: ./redis
     ports:
       - "8000:6379"
     volumes:
@@ -21,20 +23,21 @@ services:
       - project
     restart: always
     command: /redis/conf/redis.conf
-#  mongo-service:
-#    image: mongo:4.4.3
-#    ports:
-#      - "9000:27017"
-#    volumes:
-#      - ./mongo:/mongo
-#    networks:
-#      - project
-#    command: -f /mongo/conf/mongod.conf
-#    restart: always
-#    user: root
+  mongo-service:
+    container_name: mongo-service
+    build: ./mongo
+    ports:
+      - "9000:27017"
+    volumes:
+      - mongo:/mongo
+    networks:
+      - project
+    restart: always
+    command: -f /mongo/conf/mongod.conf
 
 networks:
   project:
 volumes:
   mysql:
   redis:
+  mongo:
