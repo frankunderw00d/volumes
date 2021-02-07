@@ -1,0 +1,15 @@
+version: "3"
+
+services:
+  userserver:
+    image: userserver:v1.4.2
+    ports:
+    - 8080
+    - 8081
+    - 8082
+    restart: always
+    networks:
+      - project
+
+networks:
+  project:

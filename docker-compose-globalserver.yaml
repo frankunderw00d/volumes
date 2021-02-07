@@ -1,0 +1,11 @@
+version: "3"
+
+services:
+  globalserver:
+    image: globalserver:v1.4.1
+    restart: always
+    networks:
+      - project
+
+networks:
+  project:
