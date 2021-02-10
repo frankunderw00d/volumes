@@ -34,20 +34,36 @@ services:
       - project
     restart: always
     command: -f /mongo/conf/mongod.conf
-  globalserver:
-    image: globalserver:v1.4.2
-    restart: always
-    networks:
-      - project
-  userserver:
-    image: userserver:v1.4.2
+  registry:
+    container_name: registry-service
+    build: ./registry
     ports:
-      - 8080
-      - 8081
-      - 8082
+      - "5000:5000"
+    volumes:
+      - registry:/var/lib/registry
     restart: always
-    networks:
-      - project
+  registry-ui:
+    container_name: registry-ui-service
+    image: joxit/docker-registry-ui:main-static
+    ports:
+      - "80:80"
+    environment:
+      URL: http://localhost:5000
+      DELETE: "true"
+#  globalserver:
+#    image: globalserver:v1.4.3
+#    restart: always
+#    networks:
+#      - project
+#  userserver:
+#    image: userserver:v1.4.3
+#    ports:
+#      - 8080
+#      - 8081
+#      - 8082
+#    restart: always
+#    networks:
+#      - project
 
 networks:
   project:
@@ -55,3 +71,4 @@ volumes:
   mysql:
   redis:
   mongo:
+  registry:
