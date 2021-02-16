@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  globalserver:
+    build:
+      context: ../globalserver
+      dockerfile: Dockerfile
+    stop_signal: SIGQUIT
+    restart: always
+    networks:
+      - database
+  userserver:
+    build:
+      context: ../userserver
+      dockerfile: Dockerfile
+    stop_signal: SIGQUIT
+    ports:
+      - 8080
+      - 8081
+      - 8082
+    restart: always
+    networks:
+      - database
+  logserver:
+    container_name: logserver
+    build:
+      context: ../logserver
+      dockerfile: Dockerfile
+    stop_signal: SIGQUIT
+    ports:
+      - 10000
+      - 10001
+      - 10002
+    restart: always
+    networks:
+      - database
+    volumes:
+      - log:/opt/logserver/log
+
+networks:
+  database:
+volumes:
+  log:

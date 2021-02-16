@@ -1,4 +1,4 @@
-FROM registry:2.4.1
+FROM registry:2
 
 MAINTAINER FrankUnderwood <frankunderw00d123123412345@gmail.com>
 
