@@ -7,4 +7,4 @@
 ./mongo/data/
 ./mongo/log/
 
-./registry/data/
+./registry/data/*
