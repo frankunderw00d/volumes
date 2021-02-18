@@ -118,7 +118,7 @@ mongo:4.4.3 -f /mongo/conf/mongod.conf
 ```
 docker container run -d --name registry -p 5000:5000 \
 --mount type=bind,src=$PWD/registry/data,dst=/var/lib/registry \
---mount type=bind,src=$PWD/registry/conf/config.yaml,dst=/etc/docker/registry/config.yml \
+--mount type=bind,src=$PWD/registry/conf/config.yml,dst=/etc/docker/registry/config.yml \
 registry:2.4.1
 ```
 

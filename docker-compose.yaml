@@ -1,0 +1,43 @@
+version: "3"
+
+services:
+  mysql-service:
+    container_name: mysql-service
+    image: mysql:v1.0.0
+    ports:
+      - "7000:3306"
+    volumes:
+      - mysql:/mysql
+    networks:
+      - project
+    restart: always
+    command: --defaults-file=/mysql/conf/my.cnf
+  redis-service:
+    container_name: redis-service
+    image: redis:v1.0.0
+    ports:
+      - "8000:6379"
+    volumes:
+      - redis:/redis
+    networks:
+      - project
+    restart: always
+    command: /redis/conf/redis.conf
+  mongo-service:
+    container_name: mongo-service
+    image: mongo:v1.0.0
+    ports:
+      - "9000:27017"
+    volumes:
+      - mongo:/mongo
+    networks:
+      - project
+    restart: always
+    command: -f /mongo/conf/mongod.conf
+
+networks:
+  project:
+volumes:
+  mysql:
+  redis:
+  mongo:

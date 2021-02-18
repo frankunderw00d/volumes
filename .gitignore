@@ -6,3 +6,5 @@
 
 ./mongo/data/
 ./mongo/log/
+
+./registry/data/
